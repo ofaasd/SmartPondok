@@ -14,8 +14,12 @@ import {
   Building2
 } from 'lucide-react';
 
-export default function PricingCalculator() {
-  const [santriCount, setSantriCount] = useState<number>(250);
+interface PricingCalculatorProps {
+  santriCount: number;
+  setSantriCount: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export default function PricingCalculator({ santriCount, setSantriCount }: PricingCalculatorProps) {
   const [pricingModel, setPricingModel] = useState<PricingModel>('saas');
   const [billingCycle, setBillingCycle] = useState<BillingCycle>('annually');
   const [selectedTier, setSelectedTier] = useState<Tier>('gold');
@@ -131,8 +135,8 @@ export default function PricingCalculator() {
       ? selectedAddons.map(id => ADDONS.find(a => a.id === id)?.name).join(', ')
       : 'Tanpa Add-on';
 
-    const text = `Bismillah, Assalamu'alaikum Wr. Wb. Tim SmartPondok RMS,%0A%0ASaya tertarik dengan sistem informasi *SmartPondok by RMS*. Berikut adalah simulasi konfigurasi pesantren kami:%0A%0A- *Nama Pondok*: [Tuliskan Nama Pondok Pesantren Anda]%0A- *Estimasi Santri*: ${santriCount} santri%0A- *Paket Dipilih*: Paket ${pkg.name}%0A- *Skema Biaya*: ${modelText}%0A- *Fitur Tambahan (Add-ons)*: ${addonsText}%0A- *Estimasi Total Investasi*: ${formatIDR(getTotalUpfront())}%0A%0AMohon bantuan untuk menjadwalkan demo sistem / konsultasi gratis lebih lanjut. Jazakumullah khair.`;
-    return `https://wa.me/6281234567890?text=${text}`; // Fill placeholder WA number
+    const text = `Bismillah, Assalamu'alaikum Wr. Wb. Tim SmartPondok RMEDIA,%0A%0ASaya tertarik dengan sistem informasi *SmartPondok by RMEDIA*. Berikut adalah simulasi konfigurasi pesantren kami:%0A%0A- *Nama Pondok*: [Tuliskan Nama Pondok Pesantren Anda]%0A- *Estimasi Santri*: ${santriCount} santri%0A- *Paket Dipilih*: Paket ${pkg.name}%0A- *Skema Biaya*: ${modelText}%0A- *Fitur Tambahan (Add-ons)*: ${addonsText}%0A- *Estimasi Total Investasi*: ${formatIDR(getTotalUpfront())}%0A%0AMohon bantuan untuk menjadwalkan demo sistem / konsultasi gratis lebih lanjut. Jazakumullah khair.`;
+    return `https://wa.me/6282210009903?text=${text}`;
   };
 
   return (

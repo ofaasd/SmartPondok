@@ -191,9 +191,9 @@ export const ADDONS: AddOn[] = [
 // Copywriting hooks and techniques in Indonesian
 export const COPYWRITING = {
   headline: 'Transformasikan Manajemen Pesantren ke Era Digital dengan Lebih Berkah & Efisien',
-  subheadline: 'SmartPondok by RMS membantu mengelola akademik, kepengasuhan, keuangan, hingga aset pesantren Anda dalam satu platform terintegrasi. Dibangun khusus dengan nilai-nilai kepesantrenan.',
+  subheadline: 'SmartPondok by RMEDIA membantu mengelola akademik, kepengasuhan, keuangan, hingga aset pesantren Anda dalam satu platform terintegrasi. Dibangun khusus dengan nilai-nilai kepesantrenan.',
   heroCTA: 'Hitung Simulasi Harga',
-  heroSecondaryCTA: 'Generasikan Proposal AI',
+  heroSecondaryCTA: 'Coba Demo Interaktif',
   problemSection: {
     tagline: 'TANTANGAN NYATA PESANTREN',
     title: 'Sering Mengalami Masalah-Masalah Klasik Ini?',
@@ -224,7 +224,7 @@ export const COPYWRITING = {
   solutionSection: {
     tagline: 'SOLUSI TERINTEGRASI',
     title: 'Satu Sistem, Berjuta Kemudahan Khidmah',
-    subtitle: 'SmartPondok by RMS didesain intim dengan budaya pesantren Indonesia, memadukan ketegasan manajemen modern dan keluhuran akhlak santri.'
+    subtitle: 'SmartPondok by RMEDIA didesain intim dengan budaya pesantren Indonesia, memadukan ketegasan manajemen modern dan keluhuran akhlak santri.'
   },
   whyChooseUs: [
     {

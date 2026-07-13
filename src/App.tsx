@@ -41,12 +41,50 @@ export default function App() {
     message: ''
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [santriCount, setSantriCount] = useState<number>(250);
+  
+  const [currentView, setCurrentView] = useState<'home' | 'proposal'>(() => {
+    const path = window.location.pathname;
+    const params = new URLSearchParams(window.location.search);
+    if (
+      path === '/proposal-ai' || 
+      path === '/proposal' || 
+      path === '/proposal-rahasia' || 
+      params.get('view') === 'proposal' || 
+      params.get('akses') === 'proposal' || 
+      params.get('secret') === 'proposal'
+    ) {
+      return 'proposal';
+    }
+    return 'home';
+  });
+
+  React.useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname;
+      const params = new URLSearchParams(window.location.search);
+      if (
+        path === '/proposal-ai' || 
+        path === '/proposal' || 
+        path === '/proposal-rahasia' || 
+        params.get('view') === 'proposal' || 
+        params.get('akses') === 'proposal' || 
+        params.get('secret') === 'proposal'
+      ) {
+        setCurrentView('proposal');
+      } else {
+        setCurrentView('home');
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   // FAQ Data
   const faqs = [
     {
       q: 'Apakah asatidzah (guru) yang sepuh tetap bisa mengoperasikan sistem ini?',
-      a: 'Sangat bisa! SmartPondok by RMS didesain dengan antarmuka yang sangat sederhana dalam Bahasa Indonesia. Pengasuh asrama hanya perlu mengetuk beberapa tombol di layar untuk absensi atau input setoran tahfidz. Kami juga menyediakan panduan video pendek dan sesi training langsung bagi seluruh staf pesantren.'
+      a: 'Sangat bisa! SmartPondok by RMEDIA didesain dengan antarmuka yang sangat sederhana dalam Bahasa Indonesia. Pengasuh asrama hanya perlu mengetuk beberapa tombol di layar untuk absensi atau input setoran tahfidz. Kami juga menyediakan panduan video pendek dan sesi training langsung bagi seluruh staf pesantren.'
     },
     {
       q: 'Bagaimana jika koneksi internet di pondok pesantren tidak stabil?',
@@ -106,6 +144,57 @@ export default function App() {
     }
   };
 
+  if (currentView === 'proposal') {
+    return (
+      <div className="min-h-screen bg-[#F8FAFC] text-slate-800 font-sans selection:bg-emerald-100 selection:text-emerald-900 overflow-x-hidden">
+        {/* Simplified Header for Secret Proposal Page */}
+        <header className="sticky top-0 bg-white border-b border-slate-200/60 py-4 px-6 flex justify-between items-center shadow-sm z-50">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 bg-emerald-800 rounded-xl flex items-center justify-center text-white font-bold font-serif text-base">
+              SP
+            </div>
+            <div>
+              <span className="text-sm font-bold text-slate-900 block leading-none">
+                SmartPondok <span className="text-emerald-700 font-normal">by RMEDIA</span>
+              </span>
+              <span className="text-[9px] text-slate-400 font-mono tracking-widest uppercase block mt-0.5">
+                RMEDIA SOLUSINDO
+              </span>
+            </div>
+          </div>
+          <button 
+            onClick={() => {
+              window.history.pushState({}, '', '/');
+              setCurrentView('home');
+            }}
+            className="text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-slate-200 px-3.5 py-2 rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
+          >
+            ← Kembali ke Beranda
+          </button>
+        </header>
+
+        {/* Dedicated Standalone Proposal Section */}
+        <main className="py-12 bg-gradient-to-b from-white to-[#F8FAFC]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8">
+              <span className="bg-emerald-50 text-emerald-950 border border-emerald-100 text-[10px] px-3.5 py-1.5 rounded-full font-semibold tracking-wider uppercase inline-flex items-center gap-1">
+                Akses Khusus Internal
+              </span>
+              <h1 className="text-2xl sm:text-3xl font-serif text-slate-900 mt-2 font-bold">Simulator Generator Proposal AI</h1>
+              <p className="text-xs text-slate-500 mt-1">Halaman rahasia yang tersembunyi dari publik. Hanya dapat diakses melalui link kustom ini.</p>
+            </div>
+            <AIProposal />
+          </div>
+        </main>
+
+        <footer className="py-8 bg-slate-950 text-slate-400 text-center text-xs font-mono border-t border-slate-900">
+          <div>© {new Date().getFullYear()} SmartPondok by RMEDIA. All rights reserved.</div>
+          <div className="text-[10px] text-slate-600 mt-1">Sistem Administrasi Pesantren Modern Terintegrasi • Powered by RMEDIA Solusindo</div>
+        </footer>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-800 font-sans selection:bg-emerald-100 selection:text-emerald-900 overflow-x-hidden">
       
@@ -120,10 +209,10 @@ export default function App() {
             </div>
             <div>
               <span className="text-lg font-bold font-display text-slate-900 tracking-tight block">
-                SmartPondok <span className="text-emerald-700">by RMS</span>
+                SmartPondok <span className="text-emerald-700">by RMEDIA</span>
               </span>
               <span className="text-[10px] text-slate-400 font-mono tracking-widest uppercase block -mt-1">
-                RMS TECHNOLOGY
+                RMEDIA SOLUSINDO
               </span>
             </div>
           </a>
@@ -134,9 +223,6 @@ export default function App() {
             <a href="#fitur" className="hover:text-emerald-800 transition-colors">Fitur Unggulan</a>
             <a href="#demo-tour" className="hover:text-emerald-800 transition-colors">Live Demo</a>
             <a href="#calculator-section" className="hover:text-emerald-800 transition-colors">Kalkulator Biaya</a>
-            <a href="#ai-proposal-section" className="hover:text-emerald-800 transition-colors font-semibold text-emerald-800 flex items-center gap-1">
-              <Sparkles size={14} className="text-emerald-700 animate-pulse" /> Proposal AI
-            </a>
             <a href="#faq" className="hover:text-emerald-800 transition-colors">FAQ</a>
           </nav>
 
@@ -196,13 +282,6 @@ export default function App() {
             >
               Kalkulator Biaya Investasi
             </a>
-            <a 
-              href="#ai-proposal-section" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block p-3 rounded-lg bg-emerald-50 text-sm font-bold text-emerald-900 flex items-center gap-1.5"
-            >
-              <Sparkles size={14} className="text-emerald-700" /> Generasikan Proposal AI
-            </a>
             <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100">
               <a 
                 href="#konsultasi"
@@ -260,10 +339,10 @@ export default function App() {
               <ArrowRight size={16} />
             </a>
             <a 
-              href="#ai-proposal-section" 
+              href="#demo-tour" 
               className="bg-slate-900 hover:bg-slate-950 text-white font-bold text-sm px-8 py-4 rounded-xl transition-all shadow-lg shadow-slate-900/15 inline-flex items-center gap-1.5 hover:-translate-y-0.5 duration-200 cursor-pointer"
             >
-              <Sparkles size={16} className="text-amber-400" />
+              <ChevronRight size={16} className="text-emerald-400 animate-pulse" />
               <span>{COPYWRITING.heroSecondaryCTA}</span>
             </a>
           </div>
@@ -454,6 +533,10 @@ export default function App() {
                   <div className={`pt-8 border-t mt-8 space-y-3 ${isPlatinum ? 'border-slate-800' : 'border-slate-100'}`}>
                     <a 
                       href="#calculator-section"
+                      onClick={() => {
+                        const targetLimit = tierKey === 'silver' ? 150 : tierKey === 'gold' ? 500 : 1000;
+                        setSantriCount(targetLimit);
+                      }}
                       className={`w-full py-3.5 text-center rounded-xl font-bold text-xs block transition-all hover:-translate-y-0.5 duration-200 ${
                         isGold 
                           ? 'bg-emerald-800 hover:bg-emerald-900 text-white shadow-lg shadow-emerald-800/15' 
@@ -511,7 +594,7 @@ export default function App() {
           </div>
 
           {/* Pricing Calculator component */}
-          <PricingCalculator />
+          <PricingCalculator santriCount={santriCount} setSantriCount={setSantriCount} />
 
         </div>
       </section>
@@ -561,12 +644,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 9. AI PROPOSAL GENERATOR SECTION */}
-      <section className="py-20 bg-gradient-to-b from-white to-[#F8FAFC] border-y border-slate-200/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AIProposal />
-        </div>
-      </section>
+
 
       {/* 10. FAQS */}
       <section id="faq" className="py-20 bg-[#F8FAFC] border-b border-slate-200/50">
@@ -618,7 +696,7 @@ export default function App() {
             {/* Info side */}
             <div className="lg:col-span-5 p-8 sm:p-12 text-white bg-emerald-900 flex flex-col justify-between">
               <div className="space-y-4">
-                <span className="text-[10px] font-mono tracking-widest uppercase bg-emerald-800 text-emerald-200 px-2.5 py-1 rounded inline-block">RMS Care</span>
+                <span className="text-[10px] font-mono tracking-widest uppercase bg-emerald-800 text-emerald-200 px-2.5 py-1 rounded inline-block">RMEDIA Care</span>
                 <h3 className="text-2xl sm:text-3xl font-serif text-white">Hubungi Konsultan Kami Sekarang</h3>
                 <p className="text-emerald-100/80 text-xs sm:text-sm leading-relaxed">
                   Masih bingung menentukan modul, atau ingin menjadwalkan <b>Zoom Presentation gratis</b> dengan pengurus Yayasan? Tinggalkan data Anda, konsultan kami akan membalas via WhatsApp dalam jam kerja.
@@ -650,7 +728,7 @@ export default function App() {
                   </div>
                   <h4 className="text-xl font-bold text-slate-100 font-serif">Pesan Anda Berhasil Terkirim!</h4>
                   <p className="text-slate-400 text-xs max-w-sm mx-auto leading-relaxed">
-                    Jazakumullah khair. Konsultan SmartPondok by RMS akan segera menghubungi nomor WhatsApp Anda untuk menjadwalkan demo / konsultasi gratis.
+                    Jazakumullah khair. Konsultan SmartPondok by RMEDIA akan segera menghubungi nomor WhatsApp Anda untuk menjadwalkan demo / konsultasi gratis.
                   </p>
                   <button 
                     onClick={() => { setFormSubmitted(false); setConsultForm({ pesantrenName: '', phone: '', message: '' }); }}
@@ -724,11 +802,11 @@ export default function App() {
                   SP
                 </div>
                 <span className="text-white font-bold font-display text-base tracking-tight">
-                  SmartPondok <span className="text-emerald-400">by RMS</span>
+                  SmartPondok <span className="text-emerald-400">by RMEDIA</span>
                 </span>
               </div>
               <p className="text-xs leading-relaxed text-slate-500">
-                Penyedia teknologi digitalisasi manajemen pondok pesantren modern, kredibel, dan berintegritas tinggi di bawah naungan RMS Technology.
+                Penyedia teknologi digitalisasi manajemen pondok pesantren modern, kredibel, dan berintegritas tinggi di bawah naungan RMEDIA Solusindo.
               </p>
               <div className="flex items-center gap-2 text-xs text-slate-400 font-mono">
                 <ShieldCheck size={14} className="text-emerald-500" />
@@ -759,12 +837,12 @@ export default function App() {
 
             {/* Support column */}
             <div className="md:col-span-2 space-y-3">
-              <h5 className="text-white font-bold text-xs uppercase tracking-wider font-display font-sans">Hubungi RMS</h5>
+              <h5 className="text-white font-bold text-xs uppercase tracking-wider font-display font-sans">Hubungi RMEDIA</h5>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Butuh bantuan implementasi kilat atau tanya kustomisasi sistem?
+                Butuh bantuan implementasi kilat atau tanya kustomisasi sistem? Hubungi WhatsApp kami di <b>0822-1000-9903</b> atau via tombol di bawah.
               </p>
               <a 
-                href="https://wa.me/6281234567890" 
+                href="https://wa.me/6282210009903" 
                 target="_blank" 
                 rel="noreferrer" 
                 className="inline-flex items-center gap-1.5 bg-emerald-950 hover:bg-emerald-900 border border-emerald-800 text-emerald-400 font-bold text-[11px] px-3 py-1.5 rounded-lg transition-all"
@@ -777,7 +855,7 @@ export default function App() {
           </div>
 
           <div className="pt-8 border-t border-slate-800/80 flex flex-wrap justify-between items-center text-[10px] sm:text-xs text-slate-600 font-mono">
-            <span>© {new Date().getFullYear()} SmartPondok by RMS. All rights reserved.</span>
+            <span>© {new Date().getFullYear()} SmartPondok by RMEDIA. All rights reserved.</span>
             <span>Handcrafted in Indonesia for Pesantren Digitalization</span>
           </div>
 

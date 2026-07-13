@@ -30,14 +30,14 @@ app.post("/api/generate-proposal", async (req, res) => {
       return res.status(400).json({ error: "Nama Pesantren wajib diisi" });
     }
 
-    const systemInstruction = `Anda adalah Direktur Bisnis Senior dari SmartPondok by RMS (di bawah naungan RMS Technology), sebuah penyedia Sistem Informasi Manajemen (SIM) Pondok Pesantren terkemuka di Indonesia.
+    const systemInstruction = `Anda adalah Direktur Bisnis Senior dari SmartPondok by RMEDIA (di bawah naungan RMEDIA Solusindo), sebuah penyedia Sistem Informasi Manajemen (SIM) Pondok Pesantren terkemuka di Indonesia.
 Tugas Anda adalah membuat proposal penawaran bisnis yang sangat profesional, persuasif, sopan, dan terstruktur rapi untuk ditujukan kepada Yayasan / Pimpinan Pondok Pesantren dalam Bahasa Indonesia yang formal dan beradab tinggi (menggunakan salam khas pesantren, bahasa yang menghormati kyai/ustadz).
 
 Format output harus berupa JSON yang valid dengan kunci-kunci berikut untuk memudahkan rendering interaktif di frontend:
 {
   "title": "PROPOSAL PENAWARAN SIM PONDOK PESANTREN...",
   "intro": "Salam pembuka islami formal, penghormatan kepada jajaran asatidzah dan pengurus, serta pengantar yang tulus...",
-  "executiveSummary": "Ringkasan eksekutif tentang pentingnya digitalisasi pesantren demi mengoptimalkan khidmah kepada ummat dan mengapa SmartPondok by RMS adalah solusi terbaik.",
+  "executiveSummary": "Ringkasan eksekutif tentang pentingnya digitalisasi pesantren demi mengoptimalkan khidmah kepada ummat dan mengapa SmartPondok by RMEDIA adalah solusi terbaik.",
   "needAnalysis": "Analisis mendalam berdasarkan tantangan spesifik yang mereka hadapi saat ini (hubungkan langsung dengan tantangan: '${painPoints || "Efisiensi pengelolaan pondok"}'). Jelaskan secara logis bagaimana SmartPondok menyelesaikan permasalahan tersebut.",
   "featuresBreakdown": [
     {
@@ -63,12 +63,12 @@ Format output harus berupa JSON yang valid dengan kunci-kunci berikut untuk memu
       "activities": "Pengumpulan data induk santri, konfigurasi server awal, dan sosialisasi ke pengurus."
     }
   ],
-  "closing": "Salam penutup penuh doa keberkahan untuk perkembangan pondok pesantren, tanda tangan hormat dari Direktur SmartPondok by RMS, dan ajakan untuk melakukan audiensi langsung."
+  "closing": "Salam penutup penuh doa keberkahan untuk perkembangan pondok pesantren, tanda tangan hormat dari Direktur SmartPondok by RMEDIA, dan ajakan untuk melakukan audiensi langsung."
 }
 
 Harap pastikan konten proposal disesuaikan secara dinamis dengan nama pesantren ('${pesantrenName}') dan kapasitas '${santriCount}' santri agar terasa sangat personal, hangat, dan meyakinkan. Tonjolkan nilai spiritual (tahfidz tracker, pembentukan karakter, kedisiplinan) berpadu dengan keunggulan efisiensi operasional modern.`;
 
-    const userPrompt = `Buatkan proposal penawaran SmartPondok by RMS untuk:
+    const userPrompt = `Buatkan proposal penawaran SmartPondok by RMEDIA untuk:
 - Nama Pondok Pesantren: ${pesantrenName}
 - Estimasi Jumlah Santri: ${santriCount} santri
 - Masalah/Tantangan Utama Saat Ini: ${painPoints || "Efisiensi administrasi, pencatatan keuangan, dan pemantauan tahfidz santri."}
@@ -78,7 +78,7 @@ Harap pastikan konten proposal disesuaikan secara dinamis dengan nama pesantren 
 - Nama Kontak Pendaftar: ${contactName || "Pimpinan Pondok Pesantren"}
 - Nomor Telepon/WhatsApp: ${phone || "-"}
 
-Buat proposal yang sangat kaya informasi, berwibawa, beradab islami, dan dapat meyakinkan pihak Yayasan untuk menyetujui anggaran SmartPondok by RMS.`;
+Buat proposal yang sangat kaya informasi, berwibawa, beradab islami, dan dapat meyakinkan pihak Yayasan untuk menyetujui anggaran SmartPondok by RMEDIA.`;
 
     const response = await ai.models.generateContent({
       model: "gemini-3.5-flash",
