@@ -199,7 +199,7 @@ export default function App() {
     <div className="min-h-screen bg-[#F8FAFC] text-slate-800 font-sans selection:bg-emerald-100 selection:text-emerald-900 overflow-x-hidden">
       
       {/* 1. HEADER & NAVIGATION */}
-      <header className="sticky top-0 bg-white/90 backdrop-blur-md border-b border-slate-200/50 z-40 transition-all shadow-[0_2px_15px_-3px_rgba(0,0,0,0.02)]">
+      <header className="fixed top-0 left-0 right-0 w-full bg-white/90 backdrop-blur-md border-b border-slate-200/50 z-50 transition-all shadow-[0_2px_15px_-3px_rgba(0,0,0,0.02)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
           
           {/* Logo Brand */}
@@ -303,7 +303,7 @@ export default function App() {
       </header>
 
       {/* 2. HERO SECTION */}
-      <section className="relative pt-10 pb-20 md:py-24 bg-gradient-to-b from-emerald-50/20 via-white to-[#F8FAFC] overflow-hidden">
+      <section className="relative pt-28 pb-20 md:pt-36 md:pb-24 bg-gradient-to-b from-emerald-50/20 via-white to-[#F8FAFC] overflow-hidden">
         
         {/* Absolute Background Elements */}
         <div className="absolute left-1/2 -translate-x-1/2 top-12 w-full max-w-7xl h-[400px] pointer-events-none -z-10 opacity-[0.03]">
