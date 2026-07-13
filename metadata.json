@@ -1,5 +1,5 @@
 {
-  "name": "SmartPondok by RMS",
+  "name": "SmartPondok by RMEDIA",
   "description": "Sistem Informasi Manajemen Pondok Pesantren Modern dan Komprehensif untuk digitalisasi administrasi, akademik, keuangan, dan kepengasuhan santri.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
